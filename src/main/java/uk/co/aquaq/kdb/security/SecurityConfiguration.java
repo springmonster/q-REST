@@ -85,6 +85,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .httpBasic().and().cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
 
     }
-
-
 }

@@ -67,8 +67,10 @@ public class KdbConnectionWrapper {
         c connectionToKdb = open();
         try {
             connectionToKdb.ks(gatewayFunction,
-                    new Object[]{kdbRequest.getFunctionName().toCharArray(),
-                            kdbRequest.getArguments().toCharArray()},
+                    new Object[]{
+                            kdbRequest.getFunctionName().toCharArray(),
+                            kdbRequest.getArguments().toCharArray()
+                    },
                     kdbRequest.getCredentialDictionary());
             return connectionToKdb.k();
         } finally {
@@ -81,7 +83,10 @@ public class KdbConnectionWrapper {
         try {
             String value = "value";
             connectionToKdb.ks(gatewayFunction,
-                    new Object[]{value.toCharArray(), queryRequest.getQuery().toCharArray()}, new c.Dict(new String[]{"user"}, new String[]{credentialValues.getUsername()}));
+                    new Object[]{
+                            value.toCharArray(),
+                            queryRequest.getQuery().toCharArray()
+                    }, new c.Dict(new String[]{"user"}, new String[]{credentialValues.getUsername()}));
             return connectionToKdb.k();
         } finally {
             connectionToKdb.close();
