@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>uk.co.aquaq</groupId>
@@ -24,7 +25,8 @@
         <maven.release.plugin.version>2.5.3</maven.release.plugin.version>
 
         <skip.static>false</skip.static>
-        <maven.checkstyle.plugin.suppress.path>checkstyle/checkstyle-suppressions.xml</maven.checkstyle.plugin.suppress.path>
+        <maven.checkstyle.plugin.suppress.path>checkstyle/checkstyle-suppressions.xml
+        </maven.checkstyle.plugin.suppress.path>
         <maven.checkstyle.plugin.version>2.17</maven.checkstyle.plugin.version>
         <maven.findbugs.plugin.version>3.0.5</maven.findbugs.plugin.version>
         <maven.jacoco.plugin.version>0.7.9</maven.jacoco.plugin.version>
@@ -130,15 +132,15 @@
     <build>
         <plugins>
             <plugin>
-               <groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.0.1.RELEASE</version>
                 <executions>
-                <execution>
-                <goals>
-                    <goal>repackage</goal>
-                </goals>
-                </execution>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
                 </executions>
             </plugin>
             <plugin>
@@ -252,10 +254,10 @@
         </plugins>
     </build>
     <repositories>
-    <repository>
-        <id>io.springfox</id>
-        <name>springfox</name>
-        <url>https://repo1.maven.org/maven2/io/springfox/</url>
-    </repository>
+        <repository>
+            <id>io.springfox</id>
+            <name>springfox</name>
+            <url>https://repo1.maven.org/maven2/io/springfox/</url>
+        </repository>
     </repositories>
 </project>

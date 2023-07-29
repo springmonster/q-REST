@@ -3,9 +3,9 @@ package uk.co.aquaq.kdb.connection;
 
 import com.kx.c;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import uk.co.aquaq.kdb.request.KdbRequest;
 import uk.co.aquaq.kdb.request.QueryRequest;
@@ -24,6 +24,7 @@ public class KdbConnectionWrapper {
     public void setGatewayFunction(String gatewayFunctionProp) {
         gatewayFunction = gatewayFunctionProp;
     }
+
     private static final Logger logger = LoggerFactory.getLogger(KdbConnectionWrapper.class);
     @Value("${kdb.host}")
     private String hostname;
@@ -34,7 +35,7 @@ public class KdbConnectionWrapper {
     @Value("${kdb.password}")
     private String password;
 
-    private c open(){
+    private c open() {
         try {
             return new c(hostname, port, getCredentials());
         } catch (UnknownHostException unknownHostException) {
@@ -53,37 +54,36 @@ public class KdbConnectionWrapper {
     }
 
     public void executeAsyncQuery(String query) throws IOException {
-        c connectionToKdb=open();
+        c connectionToKdb = open();
         try {
             connectionToKdb.ks(query);
-        }
-        finally {
+        } finally {
             connectionToKdb.close();
 
         }
     }
 
-    public Object executeDeferredSyncFunction(KdbRequest kdbRequest) throws c.KException , IOException{
-        c connectionToKdb=open();
+    public Object executeDeferredSyncFunction(KdbRequest kdbRequest) throws c.KException, IOException {
+        c connectionToKdb = open();
         try {
             connectionToKdb.ks(gatewayFunction,
                     new Object[]{kdbRequest.getFunctionName().toCharArray(),
                             kdbRequest.getArguments().toCharArray()},
                     kdbRequest.getCredentialDictionary());
-            return  connectionToKdb.k();
-        }finally {
+            return connectionToKdb.k();
+        } finally {
             connectionToKdb.close();
         }
     }
 
-    public Object executeDeferredSyncQuery(QueryRequest queryRequest,BasicCredentials credentialValues) throws c.KException , IOException{
-        c connectionToKdb=open();
+    public Object executeDeferredSyncQuery(QueryRequest queryRequest, BasicCredentials credentialValues) throws c.KException, IOException {
+        c connectionToKdb = open();
         try {
-            String value="value";
+            String value = "value";
             connectionToKdb.ks(gatewayFunction,
-                    new Object[]{value.toCharArray(),queryRequest.getQuery().toCharArray()},new c.Dict(new String[]{"user"},new String[]{credentialValues.getUsername()}));
-            return  connectionToKdb.k();
-        }finally {
+                    new Object[]{value.toCharArray(), queryRequest.getQuery().toCharArray()}, new c.Dict(new String[]{"user"}, new String[]{credentialValues.getUsername()}));
+            return connectionToKdb.k();
+        } finally {
             connectionToKdb.close();
         }
     }

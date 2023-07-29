@@ -14,7 +14,8 @@ public final class FlipTestUtil {
     private static final String ROW_2_COLUMN_1 = "dataEntry2";
     private static final int ROW_2_COLUMN_2 = 2;
 
-    private FlipTestUtil() { }
+    private FlipTestUtil() {
+    }
 
     static c.Flip createTestFlip() {
         String[] columnNames = new String[]{COLUMN_NAME_1, COLUMN_NAME_2};
@@ -28,6 +29,7 @@ public final class FlipTestUtil {
     static Object[] expectedObjectArrayRow1() {
         return new Object[]{ROW_1_COLUMN_1, ROW_1_COLUMN_2};
     }
+
     static Object[] expectedObjectArrayRow2() {
         return new Object[]{ROW_2_COLUMN_1, ROW_2_COLUMN_2};
     }

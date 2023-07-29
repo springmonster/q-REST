@@ -15,29 +15,29 @@ public final class FlipConverter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FlipConverter.class);
 
-    public List<Map<String, Object>> convertFlipToRecordList(c.Flip flip){
+    public List<Map<String, Object>> convertFlipToRecordList(c.Flip flip) {
         String columnHeaders = FlipConverter.getColumnNames(flip);
-        List recordList=FlipConverter.getDataRows(flip);
+        List recordList = FlipConverter.getDataRows(flip);
         String[] parsedColumnHeaders = columnHeaders.split("[,]");
 
-        return populateRecordList(parsedColumnHeaders,recordList, flip);
+        return populateRecordList(parsedColumnHeaders, recordList, flip);
     }
 
-    private  List<Map<String, Object>> populateRecordList(String[] columnHeaders, List<Object> records, c.Flip flip){
+    private List<Map<String, Object>> populateRecordList(String[] columnHeaders, List<Object> records, c.Flip flip) {
         List<Map<String, Object>> recordList = new ArrayList<>();
         List<Object[]> tableDataList = FlipConverter.convertToDataArrays(flip);
-        for(int rowPosition = 0; rowPosition < records.size(); rowPosition++) {
+        for (int rowPosition = 0; rowPosition < records.size(); rowPosition++) {
             Object[] dataRow = tableDataList.get(rowPosition);
-            Map<String,Object> tableRecords= createTableRecordMap(columnHeaders, dataRow);
-            recordList.add(rowPosition,tableRecords);
+            Map<String, Object> tableRecords = createTableRecordMap(columnHeaders, dataRow);
+            recordList.add(rowPosition, tableRecords);
         }
 
         return recordList;
     }
 
-    private  Map<String, Object> createTableRecordMap(String[] columnHeaders, Object[] dataRow) {
+    private Map<String, Object> createTableRecordMap(String[] columnHeaders, Object[] dataRow) {
         Map<String, Object> tableRecords = new HashMap<>();
-        for(int elementPosition = 0; elementPosition < columnHeaders.length; elementPosition++){
+        for (int elementPosition = 0; elementPosition < columnHeaders.length; elementPosition++) {
             tableRecords.put(columnHeaders[elementPosition], dataRow[elementPosition]);
         }
 
@@ -62,7 +62,7 @@ public final class FlipConverter {
     private static void addRowsToDataObjects(c.Flip flip, List<Object[]> dataArrays, int numberOfColumns) throws UnsupportedEncodingException {
         for (int row = 0; row < c.n(flip.y[0]); row++) {
             Object[] dataRowArray = new Object[numberOfColumns];
-            for (int columnCount= 0; columnCount < numberOfColumns; columnCount++) {
+            for (int columnCount = 0; columnCount < numberOfColumns; columnCount++) {
                 dataRowArray[columnCount] = c.at(flip.y[columnCount], row);
             }
             dataArrays.add(dataRowArray);
