@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import uk.co.aquaq.kdb.request.KdbRequest;
 import uk.co.aquaq.kdb.request.QueryRequest;
-import uk.co.aquaq.kdb.security.BasicCredentials;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
@@ -66,19 +65,24 @@ public class KdbConnectionWrapper {
     public Object executeDeferredSyncFunction(KdbRequest kdbRequest) throws c.KException, IOException {
         c connectionToKdb = open();
         try {
-            connectionToKdb.ks(gatewayFunction,
+//            connectionToKdb.ks(gatewayFunction,
+//                    new Object[]{
+//                            kdbRequest.getFunctionName().toCharArray(),
+//                            kdbRequest.getArguments().toCharArray()
+//                    });
+
+            connectionToKdb.ks(
                     new Object[]{
                             kdbRequest.getFunctionName().toCharArray(),
                             kdbRequest.getArguments().toCharArray()
-                    },
-                    kdbRequest.getCredentialDictionary());
+                    });
             return connectionToKdb.k();
         } finally {
             connectionToKdb.close();
         }
     }
 
-    public Object executeDeferredSyncQuery(QueryRequest queryRequest, BasicCredentials credentialValues) throws c.KException, IOException {
+    public Object executeDeferredSyncQuery(QueryRequest queryRequest) throws c.KException, IOException {
         c connectionToKdb = open();
         try {
             String value = "value";
@@ -86,7 +90,7 @@ public class KdbConnectionWrapper {
                     new Object[]{
                             value.toCharArray(),
                             queryRequest.getQuery().toCharArray()
-                    }, new c.Dict(new String[]{"user"}, new String[]{credentialValues.getUsername()}));
+                    });
             return connectionToKdb.k();
         } finally {
             connectionToKdb.close();

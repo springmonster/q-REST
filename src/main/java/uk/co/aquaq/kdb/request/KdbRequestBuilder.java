@@ -1,10 +1,8 @@
 package uk.co.aquaq.kdb.request;
 
 
-import com.kx.c;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import uk.co.aquaq.kdb.security.BasicCredentials;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -22,11 +20,11 @@ public class KdbRequestBuilder {
         gatewayFunction = gatewayFunctionProp;
     }
 
-    public static KdbRequest buildKdbRequest(FunctionRequest functionRequest, BasicCredentials basicCredentials) {
+    public static KdbRequest buildKdbRequest(FunctionRequest functionRequest) {
         KdbRequest kdbRequest = new KdbRequest();
         kdbRequest.setArguments(buildArgString(functionRequest.getArguments()));
         kdbRequest.setFunctionName(functionRequest.getFunction_name());
-        kdbRequest.setCredentialDictionary(new c.Dict(new String[]{"user"}, new String[]{basicCredentials.getUsername()}));
+//        kdbRequest.setCredentialDictionary(new c.Dict(new String[]{"user"}, new String[]{basicCredentials.getUsername()}));
         kdbRequest.setGatewayFunction(gatewayFunction);
 
         return kdbRequest;

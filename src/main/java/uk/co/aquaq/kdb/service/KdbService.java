@@ -10,7 +10,6 @@ import uk.co.aquaq.kdb.request.FunctionRequest;
 import uk.co.aquaq.kdb.request.KdbRequest;
 import uk.co.aquaq.kdb.request.KdbRequestBuilder;
 import uk.co.aquaq.kdb.request.QueryRequest;
-import uk.co.aquaq.kdb.security.BasicCredentials;
 
 import java.io.UnsupportedEncodingException;
 import java.time.Instant;
@@ -28,11 +27,11 @@ public class KdbService {
     private KdbConnectionWrapper kdbConnector;
     private static final Logger logger = LoggerFactory.getLogger(KdbConnectionWrapper.class);
 
-    public Map<String, Object> executeFunction(FunctionRequest functionRequest, BasicCredentials credentialValues) {
+    public Map<String, Object> executeFunction(FunctionRequest functionRequest) {
         String timestamp = Instant.now().toString();
         try {
             validateFunctionRequest(functionRequest);
-            KdbRequest kdbRequest = KdbRequestBuilder.buildKdbRequest(functionRequest, credentialValues);
+            KdbRequest kdbRequest = KdbRequestBuilder.buildKdbRequest(functionRequest);
             return formatDeferredSyncResult(timestamp, kdbConnector.executeDeferredSyncFunction(kdbRequest));
         } catch (Exception exception) {
             logger.warn(exception.getMessage());
@@ -40,13 +39,13 @@ public class KdbService {
         }
     }
 
-    public Object executeQuery(QueryRequest queryRequest, BasicCredentials credentialValues) {
+    public Object executeQuery(QueryRequest queryRequest) {
         String timestamp = Instant.now().toString();
         try {
             validateQueryRequest(queryRequest);
             if (queryRequest.getType().equals("sync") && queryRequest.getResponse().equals("true")) {
 
-                return formatDeferredSyncResult(timestamp, kdbConnector.executeDeferredSyncQuery(queryRequest, credentialValues));
+                return formatDeferredSyncResult(timestamp, kdbConnector.executeDeferredSyncQuery(queryRequest));
             } else if (queryRequest.getType().equals("async")) {
                 create(queryRequest.getQuery());
             }
